@@ -1,5 +1,5 @@
 import { Button, message } from "antd";
-import api from "../common/get_api";
+import api from "../common/api";
 
 export default function Index() {
     const [messageApi, contextHolder] = message.useMessage();

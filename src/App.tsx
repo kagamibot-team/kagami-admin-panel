@@ -1,7 +1,7 @@
 import { ExperimentFilled, HomeFilled } from '@ant-design/icons';
 import { MenuProps, App as AntdApp } from 'antd';
 import { ConfigProvider, FloatButton, Layout, Menu, theme } from 'antd';
-import React, { PropsWithChildren , useState , useEffect } from 'react';
+import React, { PropsWithChildren, useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import zhCN from 'antd/locale/zh_CN';
 
@@ -22,22 +22,23 @@ const items: MenuItem[] = [
     }
 ];
 
-const OutBox = ( slot ) => {
-    const { token: {colorBgContainer , borderRadiusLG } } = theme.useToken();
+const OutBox: React.FC<PropsWithChildren<{}>> = (slot) => {
+    const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
     return (
-    <div
-        style={{
-            padding: 24,
-            minHeight: "calc(100% - 32px)",
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-            margin: '16px 0',
-            boxSizing: "border-box"
-        }}
-    >
-        {slot.children}
-    </div>);
-  };
+        <div
+            style={{
+                padding: 24,
+                minHeight: "calc(100% - 32px)",
+                background: colorBgContainer,
+                borderRadius: borderRadiusLG,
+                margin: '16px 0',
+                boxSizing: "border-box"
+            }}
+        >
+            {slot.children}
+        </div>
+    );
+};
 
 const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     // 动态检测暗黑模式
@@ -46,7 +47,8 @@ const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     useEffect(() => {
         queryDarkMode.addEventListener("change", () => {
             setThemeStyle(queryDarkMode.matches ? true : false)
-    })})
+        })
+    })
 
 
     const navigate = useNavigate();

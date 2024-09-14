@@ -65,7 +65,7 @@ const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         }} locale={zhCN}>
             <AntdApp>
                 <Layout hasSider style={{ minHeight: '100vh' }}>
-                    <Sider theme='light'>
+                    <Sider theme='light' breakpoint="lg" collapsedWidth="0">
                         <div style={{
                             fontSize: 18,
                             marginLeft: 30,
@@ -84,7 +84,7 @@ const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
                         <Content style={{
                             padding: '0 16px',
                             boxSizing: 'border-box',
-                            overflow: "scroll",
+                            overflowY: "scroll",
                             height: "100%",
                         }} id='content'>
                             <OutBox>

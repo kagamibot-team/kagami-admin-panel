@@ -3,6 +3,7 @@ import Index from "../pages/IndexPage";
 import App from "../App";
 import ErrorPage from "../pages/error/ErrorPage";
 import MessagePage from "../pages/MessagePage";
+import LogPage from "../pages/LogPage";
 
 export const router = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
             {
                 path: "/messages",
                 element: <MessagePage />
+            },
+            {
+                path: "/log",
+                element: <LogPage />
             }
         ]
     },

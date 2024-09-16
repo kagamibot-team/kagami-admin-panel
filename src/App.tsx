@@ -1,9 +1,11 @@
-import { ExperimentFilled, HomeFilled, MessageFilled } from '@ant-design/icons';
+import { ExperimentFilled, HomeFilled, MessageFilled, PrinterOutlined } from '@ant-design/icons';
 import { MenuProps, App as AntdApp } from 'antd';
 import { ConfigProvider, FloatButton, Layout, Menu, theme } from 'antd';
 import React, { PropsWithChildren, useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import zhCN from 'antd/locale/zh_CN';
+
+import DarkValue from './common/darkvalue'
 
 const { Content, Sider } = Layout;
 
@@ -19,6 +21,11 @@ const items: MenuItem[] = [
         key: "/messages",
         label: "消息页",
         icon: <MessageFilled />
+    },
+    {
+        key: "/log",
+        label: "日志",
+        icon: <PrinterOutlined />
     },
     {
         key: "/test",
@@ -48,10 +55,10 @@ const OutBox: React.FC<PropsWithChildren<{}>> = (slot) => {
 const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     // 动态检测暗黑模式
     const queryDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
-    const [themeStyle, setThemeStyle] = useState(queryDarkMode.matches ? true : false);
+    const [darkStyle, setDarkStyle] = useState(queryDarkMode.matches ? true : false);
     useEffect(() => {
         queryDarkMode.addEventListener("change", () => {
-            setThemeStyle(queryDarkMode.matches ? true : false)
+            setDarkStyle(queryDarkMode.matches ? true : false)
         })
     })
 
@@ -61,46 +68,47 @@ const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
     return (
         <ConfigProvider theme={{
-            algorithm: themeStyle ? theme.darkAlgorithm : theme.defaultAlgorithm,
+            algorithm: darkStyle ? theme.darkAlgorithm : theme.defaultAlgorithm,
             cssVar: true,
             token: {
                 colorPrimary: "#8d18cc",
                 borderRadius: 10,
             }
         }} locale={zhCN}>
-            <AntdApp>
-                <Layout hasSider style={{ minHeight: '100vh' }}>
-                    <Sider theme='light' breakpoint="lg" collapsedWidth="0">
-                        <div style={{
-                            fontSize: 18,
-                            marginLeft: 30,
-                            marginTop: 20,
-                            marginBottom: 12,
-                            fontWeight: 700
-                        }}>小镜 BOT 后台</div>
-                        <Menu selectedKeys={[location.pathname]} mode="inline" items={items} onClick={({ key }) => {
-                            if (key != location.pathname) {
-                                navigate(key);
-
-                            }
-                        }} />
-                    </Sider>
-                    <Layout style={{ height: "100vh" }}>
-                        <Content style={{
-                            padding: '0 16px',
-                            boxSizing: 'border-box',
-                            overflowY: "scroll",
-                            height: "100%",
-                        }} id='content'>
-                            <OutBox>
-                                <Outlet />
-                                {children}
-                            </OutBox>
-                            <FloatButton.BackTop style={{ insetBlockEnd: 84 }} target={() => document.getElementById("content")!!} />
-                        </Content>
+            <DarkValue.Provider value={darkStyle}>
+                <AntdApp>
+                    <Layout hasSider style={{ minHeight: '100vh' }}>
+                        <Sider theme='light' breakpoint="lg" collapsedWidth="0">
+                            <div style={{
+                                fontSize: 18,
+                                marginLeft: 30,
+                                marginTop: 20,
+                                marginBottom: 12,
+                                fontWeight: 700
+                            }}>小镜 BOT 后台</div>
+                            <Menu selectedKeys={[location.pathname]} mode="inline" items={items} onClick={({ key }) => {
+                                if (key != location.pathname) {
+                                    navigate(key);
+                                }
+                            }} />
+                        </Sider>
+                        <Layout style={{ height: "100vh" }}>
+                            <Content style={{
+                                padding: '0 16px',
+                                boxSizing: 'border-box',
+                                overflowY: "scroll",
+                                height: "100%",
+                            }} id='content'>
+                                <OutBox>
+                                    <Outlet />
+                                    {children}
+                                </OutBox>
+                                <FloatButton.BackTop style={{ insetBlockEnd: 84 }} target={() => document.getElementById("content")!!} />
+                            </Content>
+                        </Layout>
                     </Layout>
-                </Layout>
-            </AntdApp>
+                </AntdApp>
+            </DarkValue.Provider>
         </ConfigProvider>
     );
 };

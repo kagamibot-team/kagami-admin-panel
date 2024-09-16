@@ -14,7 +14,7 @@ const MessagePage: React.FC<{}> = () => {
         <LeaveWarning modified={
             broadcast_msg.length > 0
         } />
-        <Title>消息有关</Title>
+        <Title level={2}>消息有关</Title>
         <Divider />
         <Row gutter={[16, 16]}>
             <Col xs={24} md={12}>

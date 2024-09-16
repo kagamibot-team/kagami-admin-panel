@@ -1,4 +1,4 @@
-import { ExperimentFilled, HomeFilled } from '@ant-design/icons';
+import { ExperimentFilled, HomeFilled, MessageFilled } from '@ant-design/icons';
 import { MenuProps, App as AntdApp } from 'antd';
 import { ConfigProvider, FloatButton, Layout, Menu, theme } from 'antd';
 import React, { PropsWithChildren, useState, useEffect } from 'react';
@@ -14,6 +14,11 @@ const items: MenuItem[] = [
         key: "/",
         label: "首页",
         icon: <HomeFilled />,
+    },
+    {
+        key: "/messages",
+        label: "消息页",
+        icon: <MessageFilled />
     },
     {
         key: "/test",

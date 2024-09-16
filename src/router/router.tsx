@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Index from "../pages/IndexPage";
 import App from "../App";
 import ErrorPage from "../pages/error/ErrorPage";
+import MessagePage from "../pages/MessagePage";
 
 export const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Index />
+            },
+            {
+                path: "/messages",
+                element: <MessagePage />
             }
         ]
     },

@@ -6,11 +6,13 @@ import { a11yDark, a11yLight } from 'react-syntax-highlighter/dist/esm/styles/hl
 import DarkValue from '../common/darkvalue'
 import React, { PropsWithChildren, useEffect, useState } from "react";
 
+const LogRef = React.createRef<HTMLDivElement>();
+
 const { Title } = Typography;
 
 const LogBox: React.FC<PropsWithChildren> = ({ children }) => {
     const { token: { colorBgLayout } } = theme.useToken();
-    return <div style={{
+    return <div ref={LogRef} style={{
         height: 500,
         width: '100%',
         borderRadius: 8,
@@ -30,6 +32,9 @@ export default function Index() {
 
         eventSource.onmessage = event => {
             setLogs(prev => prev + "\n" + event.data);
+            if(LogRef.current!.scrollTop > LogRef.current!.scrollHeight - LogRef.current!.offsetHeight - 60){
+                LogRef.current!.scrollTop = LogRef.current!.scrollHeight; // - LogRef.current!.offsetHeight;
+            }
         };
 
         eventSource.onerror = err => {

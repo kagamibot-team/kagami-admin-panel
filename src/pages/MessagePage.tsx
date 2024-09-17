@@ -5,7 +5,7 @@ import LeaveWarning from "../components/LeaveWarning";
 import { useState } from "react";
 import api from "../common/api";
 
-const MessagePage: React.FC<{}> = () => {
+const MessagePage: React.FC = () => {
     const [broadcast_msg, set_broadcast_msg] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
 

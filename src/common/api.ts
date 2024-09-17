@@ -7,9 +7,9 @@ type APIWrapper<T> = {
 }
 
 
-async function _post<T>(path: string, data?: any) {
+async function _post<Ti, To>(path: string, data?: Ti) {
     return await axios.post(path, data).then(res => {
-        const result: APIWrapper<T> = res.data;
+        const result: APIWrapper<To> = res.data;
         if (result.code != 0) {
             throw Error(
                 `Error when fetching data Code=${result.code} Msg=${result.msg}`
@@ -39,7 +39,7 @@ function get<T>(path: string) {
 
 
 function post<Ti, To>(path: string) {
-    return async (data: Ti) => await _post<To>(path, data);
+    return async (data: Ti) => await _post<Ti, To>(path, data);
 }
 
 

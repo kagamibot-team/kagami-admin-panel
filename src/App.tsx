@@ -34,7 +34,7 @@ const items: MenuItem[] = [
     }
 ];
 
-const OutBox: React.FC<PropsWithChildren<{}>> = (slot) => {
+const OutBox: React.FC<PropsWithChildren> = (slot) => {
     const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
     return (
         <div
@@ -52,7 +52,7 @@ const OutBox: React.FC<PropsWithChildren<{}>> = (slot) => {
     );
 };
 
-const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+const App: React.FC<PropsWithChildren> = ({ children }) => {
     // 动态检测暗黑模式
     const queryDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
     const [darkStyle, setDarkStyle] = useState(queryDarkMode.matches ? true : false);
@@ -64,7 +64,7 @@ const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
 
     const navigate = useNavigate();
-    let location = useLocation();
+    const location = useLocation();
 
     return (
         <ConfigProvider theme={{
@@ -103,7 +103,9 @@ const App: React.FC<PropsWithChildren<{}>> = ({ children }) => {
                                     <Outlet />
                                     {children}
                                 </OutBox>
-                                <FloatButton.BackTop style={{ insetBlockEnd: 84 }} target={() => document.getElementById("content")!!} />
+                                <FloatButton.BackTop style={{ insetBlockEnd: 84 }} target={
+                                    () => document.getElementById("content") as HTMLElement
+                                } />
                             </Content>
                         </Layout>
                     </Layout>

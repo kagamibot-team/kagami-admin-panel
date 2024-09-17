@@ -31,9 +31,11 @@ export default function Index() {
         const eventSource = new EventSource("/kagami-api/logs");
 
         eventSource.onmessage = event => {
-            setLogs(prev => (prev == "" ? event.data : prev + "\n" + event.data));
-            if(LogRef.current!.scrollTop > LogRef.current!.scrollHeight - LogRef.current!.offsetHeight - 100){
+            if(LogRef.current!.scrollTop > LogRef.current!.scrollHeight - LogRef.current!.offsetHeight - 50){
+                setLogs(prev => (prev == "" ? event.data : prev + "\n" + event.data));
                 LogRef.current!.scrollTop = LogRef.current!.scrollHeight; // - LogRef.current!.offsetHeight;
+            } else {
+                setLogs(prev => (prev == "" ? event.data : prev + "\n" + event.data));
             }
         };
 

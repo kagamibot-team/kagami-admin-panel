@@ -65,19 +65,35 @@ export default function Index() {
                 {value => <SyntaxHighlighter
                     PreTag="div"
                     CodeTag="span"
-                    lineNumberStyle={{
-                        background: colorBgElevated,
-                        marginRight: '0.5em'
-                    }}
                     customStyle={{
-                        overflowX: 'unset',
+                        // overflowX: 'unset',
                         padding: 'none',
                         background: 'none',
                         fontFamily: "monospace",
+                        width: "100%",
                     }}
                     language="accesslog"
                     showLineNumbers={true}
-                    style={value ? a11yDark : a11yLight}>
+                    style={value ? a11yDark : a11yLight}
+                    wrapLines={true}
+                    lineProps={{
+                        style: { 
+                            wordBreak: 'break-all', 
+                            whiteSpace: 'pre-wrap',
+                            paddingLeft: "4.75em",
+                            display: "block",
+                            position: "relative",
+                        }
+                    }}
+                    lineNumberStyle={{
+                        background: colorBgElevated,
+                        marginRight: '0.5em',
+                        position: "absolute",
+                        left: 0,
+                        width: "4.25em",
+                        height: "100%",
+                    }}
+                >
                     {logs}
                 </SyntaxHighlighter>}
             </DarkValue.Consumer>

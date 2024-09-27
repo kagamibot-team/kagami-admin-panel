@@ -31,12 +31,19 @@ export default function Index() {
         const eventSource = new EventSource("/kagami-api/logs");
 
         eventSource.onmessage = event => {
-            if(LogRef.current!.scrollTop > LogRef.current!.scrollHeight - LogRef.current!.offsetHeight - 100){
-                setLogs(prev => (prev == "" ? event.data : prev + "\n" + event.data));
-                LogRef.current!.scrollTop = LogRef.current!.scrollHeight; // - LogRef.current!.offsetHeight;
-            } else {
-                setLogs(prev => (prev == "" ? event.data : prev + "\n" + event.data));
-            }
+            setLogs(prev => {
+                // 提前判断是否需要滚动，这样就可以保证一次性更新很多很多行的时候能够正常输出
+                let do_auto_scroll = (
+                    LogRef.current!.scrollTop > LogRef.current!.scrollHeight - LogRef.current!.offsetHeight - 100
+                    || prev.length == 0     // 我添加了提前显示 50 行的特性，最开始还是先滚到最下面比较好
+                );
+                setTimeout(() => {
+                    if (do_auto_scroll) {
+                        LogRef.current!.scrollTop = LogRef.current!.scrollHeight; // - LogRef.current!.offsetHeight;
+                    }
+                }, 0);
+                return prev == "" ? event.data : prev + "\n" + event.data;
+            });
         };
 
         eventSource.onerror = err => {
@@ -66,7 +73,7 @@ export default function Index() {
                         overflowX: 'unset',
                         padding: 'none',
                         background: 'none',
-                        fontFamily: "Consolas",
+                        fontFamily: "monospace",
                     }}
                     language="accesslog"
                     showLineNumbers={true}
